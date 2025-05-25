@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
         <link rel="stylesheet" href="css/qgis2web.css">
         <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/MarkerCluster.css">
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css">
         <link rel="stylesheet" href="css/leaflet-search.css">
         <style>
         html, body, #map {
@@ -34,6 +36,7 @@
         <script src="js/rbush.min.js"></script>
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
         <script src="js/leaflet-search.js"></script>
         <script src="data/zip_format_1.js"></script>
         <script src="data/pts_format_2.js"></script>
@@ -358,11 +361,15 @@
                 return L.circleMarker(latlng, style_pts_format_2_0(feature));
             },
         });
+        var cluster_pts_format_2 = new L.MarkerClusterGroup({showCoverageOnHover: false,
+            spiderfyDistanceMultiplier: 2});
+        cluster_pts_format_2.addLayer(layer_pts_format_2);
+
         bounds_group.addLayer(layer_pts_format_2);
-        map.addLayer(layer_pts_format_2);
+        cluster_pts_format_2.addTo(map);
         setBounds();
         map.addControl(new L.Control.Search({
-            layer: layer_pts_format_2,
+            layer: cluster_pts_format_2,
             initial: false,
             hideMarkerOnCollapse: true,
             propertyName: 'Name'}));
